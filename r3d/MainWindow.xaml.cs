@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 using Microsoft.Win32;
+using Newtonsoft.Json;
+using r3d.PrinterSettings;
+using Path = System.IO.Path;
 
 namespace r3d
 {
@@ -36,6 +41,7 @@ namespace r3d
 
         private string printSettingsFolder;
         private string printSettingsFileName;
+        private Settings printerSettings;
         private string printFilesFolder;
         private string printFileName;
 
@@ -185,7 +191,36 @@ namespace r3d
 
         private void Menu_SettingsClick(object sender, RoutedEventArgs e)
         {
-            SettingsTextBlock.AppendText("This is a test.");
+            LoadJsonSettings();
+
+            WriteLine($"Settings:\r\tX-Axis:");
+            WriteLine($"\t\tMinimum: {printerSettings.XAxis.Minimum}");
+            WriteLine($"\t\tMaximum: {printerSettings.XAxis.Maximum}");
+            WriteLine($"\t\tPoints/Millimeter: {printerSettings.XAxis.PointsPerMillimeter}");
+
+            WriteLine($"\tY-Axis:");
+            WriteLine($"\t\tMinimum: {printerSettings.YAxis.Minimum}");
+            WriteLine($"\t\tMaximum: {printerSettings.YAxis.Maximum}");
+            WriteLine($"\t\tPoints/Millimeter: {printerSettings.YAxis.PointsPerMillimeter}");
+
+            WriteLine($"\tZ-Axis:");
+            WriteLine($"\t\tMinimum: {printerSettings.ZAxis.Minimum}");
+            WriteLine($"\t\tMaximum: {printerSettings.ZAxis.Maximum}");
+            WriteLine($"\t\tPoints/Millimeter: {printerSettings.ZAxis.PointsPerMillimeter}");
+        }
+
+        private void WriteLine(string text)
+        {
+            SettingsTextBlock.AppendText($"{text}\r".Replace("\t","  "));
+        }
+
+        public void LoadJsonSettings()
+        {
+            using (var r = new StreamReader(Path.Combine(LabelSettingsFolder.Content.ToString(), TextSettingsFileName.Text)))
+            {
+                var json = r.ReadToEnd();
+                printerSettings = JsonConvert.DeserializeObject<Settings>(json);
+            }
         }
 
         private void Menu_OpenSvgFileClick(object sender, RoutedEventArgs e)
@@ -203,15 +238,16 @@ namespace r3d
         private void Button_SettingsClick(object sender, RoutedEventArgs e)
         {
             bool? result;
-            var dlg = OpenFileDialog(out result, LabelSettingsFolder.Content.ToString(), "xml");
+            var dlg = OpenFileDialog(out result, LabelSettingsFolder.Content.ToString(), "json");
 
             // Get the selected file name and display in a TextBox 
             if (result == true)
             {
                 // Open document 
-                //TextSettingsFileName.Text = System.IO.Path.GetDirectoryName(dlg.FileName);
                 TextSettingsFileName.Text = dlg.SafeFileName;
             }
+
+            Menu_SettingsClick(sender, e);
         }
 
         private void Button_PrintClick(object sender, RoutedEventArgs e)
@@ -223,7 +259,6 @@ namespace r3d
             if (result == true)
             {
                 // Open document 
-                //TextFileName.Text = System.IO.Path.GetDirectoryName(dlg.FileName);
                 TextFileName.Text = dlg.SafeFileName;
             }
         }
