@@ -1,23 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Ports;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using r3d.PrinterSettings;
@@ -48,6 +34,7 @@ namespace r3d
         public MainWindow()
         {
             InitializeComponent();
+            Application.Current.MainWindow = this;
 
             GetAppSettings();
 
@@ -115,6 +102,13 @@ namespace r3d
                 WindowStartupLocation = WindowStartupLocation.CenterOwner
             };
             settingsWindow.ShowDialog();
+
+            printSettingsFolder = settingsWindow.SettingsFolder;
+            printSettingsFileName = settingsWindow.SettingsFile;
+            LabelSettingsFolder.Content = printSettingsFolder;
+            TextSettingsFileName.Text = printSettingsFileName;
+
+            DisplaySettings();
         }
 
         private void WriteLine(string text)
@@ -161,6 +155,8 @@ namespace r3d
 
         private void DisplaySettings()
         {
+            SettingsTextBlock.Document.Blocks.Clear();
+
             LoadJsonSettings();
 
             WriteLine($"Settings:\r\tX-Axis:");

@@ -9,6 +9,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25" />
+            <RowDefinition Height="25" />
             <RowDefinition Height="*" />
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
@@ -17,11 +18,24 @@
         </Grid.ColumnDefinitions>
         <Menu FontSize="12pt" Grid.Row="0" IsMainMenu="True">
             <MenuItem Header="_Exit" Click="Menu_ExitClick" />
-            <MenuItem Header="_New..." />
-            <MenuItem Header="_Save" />
-            <MenuItem Header="_Save As..." />
+            <MenuItem Header="_New..." Click="Menu_NewClick" />
+            <MenuItem Header="_Save" Click="Menu_SaveClick" />
+            <MenuItem Header="_Save As..." Click="Menu_SaveAsClick" />
         </Menu>
-        <Grid Row="1" Margin="5,3">
+        <Grid Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Width="Auto" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="2,0,0,0">Settings Folder</Label>
+            <Label Name="LabelSettingsFolder" Grid.Row="0" Grid.Column="1" Width="Auto"  FontSize="12" FontWeight="Bold" VerticalAlignment="Center">{Folder Path}</Label>
+            <TextBox Name="TextSettingsFileName" Grid.Row="0" Grid.Column="2" Height="25" FontSize="12" VerticalAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True"></TextBox>
+        </Grid>
+        <Grid Row="2" Margin="5,3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="20" />
                 <RowDefinition Height="25" />

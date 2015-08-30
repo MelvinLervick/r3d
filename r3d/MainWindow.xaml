@@ -56,11 +56,11 @@
             <Border Grid.Row="0" Grid.ColumnSpan="4" BorderBrush="Blue" BorderThickness="0 0 0 2" />
             <Label Grid.Row="0" Grid.Column="0" Width="Auto" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="2,0,0,0">Settings Folder</Label>
             <Label Name="LabelSettingsFolder" Grid.Row="0" Grid.Column="1" Width="Auto"  FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="10,0,5,0">{Folder Path}</Label>
-            <TextBox Name="TextSettingsFileName" Grid.Row="0" Grid.Column="2" Height="25" AcceptsReturn="True" FontSize="12" VerticalAlignment="Center" VerticalContentAlignment="Center"></TextBox>
+            <TextBox Name="TextSettingsFileName" Grid.Row="0" Grid.Column="2" Height="25" FontSize="12" VerticalAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True"></TextBox>
             <Button Grid.Row="0" Grid.Column="3" Height="30" VerticalAlignment="Center" Margin="10,2,5,3" Click="Button_SettingsClick">Settings</Button>
             <Label Grid.Row="1" Grid.Column="0" Width="Auto" FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="2,0,0,0">Print Folder</Label>
             <Label Name="LabelFilesFolder" Grid.Row="1" Grid.Column="1" Width="Auto"  FontSize="12" FontWeight="Bold" VerticalAlignment="Center" Margin="10,0,5,0">{Print Folder Path}</Label>
-            <TextBox Name="TextFileName" Grid.Row="1" Grid.Column="2" Height="25" AcceptsReturn="True" FontSize="12" VerticalAlignment="Center" VerticalContentAlignment="Center"></TextBox>
+            <TextBox Name="TextFileName" Grid.Row="1" Grid.Column="2" Height="25" FontSize="12" VerticalAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True"></TextBox>
             <Button Grid.Row="1" Grid.Column="3" Height="30" VerticalAlignment="Center" Margin="10,2,5,3" Click="Button_PrintClick">Print</Button>
 
             <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Background="#FFDCF5EC">

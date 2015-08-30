@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using r3d.PrinterSettings;
-using Path = System.Windows.Shapes.Path;
+using Path = System.IO.Path;
 
 namespace r3d
 {
@@ -22,8 +15,8 @@ namespace r3d
     /// </summary>
     public partial class MaintainSettings : Window
     {
-        private string settingsFolder;
-        private string settingsFile;
+        public string SettingsFolder;
+        public string SettingsFile;
         private Settings printerSettings;
 
         public MaintainSettings()
@@ -34,8 +27,16 @@ namespace r3d
         public MaintainSettings(string folder, string file)
         {
             InitializeComponent();
-            settingsFolder = folder;
-            settingsFile = file;
+
+            if (string.IsNullOrWhiteSpace(folder) || string.IsNullOrWhiteSpace(file))
+            {
+                CreateNewPrinterSettingsFile();
+            }
+            else
+            {
+                SettingsFolder = folder;
+                SettingsFile = file;
+            }
 
             DisplaySettings();
             XAxisMinimum.Focus();
@@ -43,6 +44,9 @@ namespace r3d
 
         private void DisplaySettings()
         {
+            LabelSettingsFolder.Content = SettingsFolder;
+            TextSettingsFileName.Text = SettingsFile;
+
             LoadJsonSettings();
 
             XAxisMinimum.Text = printerSettings.XAxis.Minimum.ToString();
@@ -58,6 +62,21 @@ namespace r3d
             ZAxisPointsPerMillimeter.Text = printerSettings.ZAxis.PointsPerMillimeter.ToString();
         }
 
+        private void SaveSettings()
+        {
+            printerSettings.XAxis.Minimum = Convert.ToInt32(XAxisMinimum.Text);
+            printerSettings.XAxis.Maximum = Convert.ToInt32(XAxisMaximum.Text);
+            printerSettings.XAxis.PointsPerMillimeter = Convert.ToInt32(XAxisPointsPerMillimeter.Text);
+
+            printerSettings.YAxis.Minimum = Convert.ToInt32(YAxisMinimum.Text);
+            printerSettings.YAxis.Maximum = Convert.ToInt32(YAxisMaximum.Text);
+            printerSettings.YAxis.PointsPerMillimeter = Convert.ToInt32(YAxisPointsPerMillimeter.Text);
+
+            printerSettings.ZAxis.Minimum = Convert.ToInt32(ZAxisMinimum.Text);
+            printerSettings.ZAxis.Maximum = Convert.ToInt32(ZAxisMaximum.Text);
+            printerSettings.ZAxis.PointsPerMillimeter = Convert.ToInt32(ZAxisPointsPerMillimeter.Text);
+        }
+
         private void Menu_ExitClick(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -65,7 +84,7 @@ namespace r3d
 
         public void LoadJsonSettings()
         {
-            using (var r = new StreamReader(System.IO.Path.Combine(settingsFolder, settingsFile)))
+            using (var r = new StreamReader(Path.Combine(SettingsFolder, SettingsFile)))
             {
                 var json = r.ReadToEnd();
                 printerSettings = JsonConvert.DeserializeObject<Settings>(json);
@@ -92,6 +111,69 @@ namespace r3d
                     e.Handled = true;
                     tb.Focus();
                 }
+            }
+        }
+
+        private void Menu_NewClick(object sender, RoutedEventArgs e)
+        {
+            CreateNewPrinterSettingsFile();
+        }
+
+        private void CreateNewPrinterSettingsFile()
+        {
+            printerSettings = new Settings
+            {
+                XAxis = new Axis { Minimum = 0, Maximum = 40, PointsPerMillimeter = 10},
+                YAxis = new Axis { Minimum = 0, Maximum = 20, PointsPerMillimeter = 10 },
+                ZAxis = new Axis { Minimum = 0, Maximum = 80, PointsPerMillimeter = 20 }
+            };
+            var json = JsonConvert.SerializeObject(printerSettings);
+
+            var createNewSettingsFileDialog = new SaveFileDialog
+            {
+                InitialDirectory = SettingsFolder,
+                DefaultExt = ".json",
+                Filter = "Files (.json)|*.json|All files (*.*)|*.*",
+                CheckPathExists = true
+            };
+            createNewSettingsFileDialog.ShowDialog();
+            if (createNewSettingsFileDialog.FileName != "")
+            {
+                SettingsFolder = Path.GetDirectoryName(createNewSettingsFileDialog.FileName);
+                SettingsFile = Path.GetFileName(createNewSettingsFileDialog.FileName);
+                LabelSettingsFolder.Content = SettingsFolder;
+                TextSettingsFileName.Text = SettingsFile;
+                File.WriteAllText(createNewSettingsFileDialog.FileName, json);
+            }
+        }
+
+        private void Menu_SaveClick(object sender, RoutedEventArgs e)
+        {
+            SaveSettings();
+            var json = JsonConvert.SerializeObject(printerSettings);
+            File.WriteAllText(Path.Combine(SettingsFolder, SettingsFile), json);
+        }
+
+        private void Menu_SaveAsClick(object sender, RoutedEventArgs e)
+        {
+            SaveSettings();
+            var json = JsonConvert.SerializeObject(printerSettings);
+
+            var saveAsUsingFileDialog = new SaveFileDialog
+            {
+                InitialDirectory = SettingsFolder,
+                DefaultExt = ".json",
+                Filter = "Files (.json)|*.json|All files (*.*)|*.*",
+                CheckPathExists = true
+            };
+            saveAsUsingFileDialog.ShowDialog();
+            if (saveAsUsingFileDialog.FileName != "")
+            {
+                SettingsFolder = Path.GetDirectoryName(saveAsUsingFileDialog.FileName);
+                SettingsFile = Path.GetFileName(saveAsUsingFileDialog.FileName);
+                LabelSettingsFolder.Content = SettingsFolder;
+                TextSettingsFileName.Text = SettingsFile;
+                File.WriteAllText(saveAsUsingFileDialog.FileName, json);
             }
         }
     }
