@@ -92,76 +92,6 @@ namespace r3d
             app.Shutdown();
         }
 
-        //private void Menu_OpenClick(object sender, RoutedEventArgs e)
-        //{
-        //    LogTextBlock.AppendText("Start Recording\r\n");
-        //    mySerialPort.Open();
-        //    Thread.Sleep(3000);
-        //}
-
-        //private void Menu_StartClick(object sender, RoutedEventArgs e)
-        //{
-        //    mySerialPort.Write("S");
-        //}
-
-        //public void AddDataMethod(string data)
-        //{
-        //    var values = new List<int>();
-
-        //    int dataValue;
-        //    if (Int32.TryParse(data, out dataValue))
-        //    {
-        //        values.Add(dataValue);
-        //    }
-        //    else
-        //    {
-        //        LogTextBlock.AppendText(data);
-        //    }
-
-        //    if (values.Count > 0)
-        //    {
-        //        foreach (var value in values)
-        //        {
-        //            if (SaveRecordedValue(value))
-        //            {
-        //                long avgValue = totalValue / countRecorded;
-        //                var outputValue = string.Format("{0}\t{1}", DateTime.UtcNow, avgValue);
-
-        //                using (var w = File.AppendText(AnalogData))
-        //                {
-        //                    w.WriteLine(outputValue);
-        //                    w.Flush();
-        //                }
-
-        //                if (ScreenIO) LogTextBlock.AppendText(outputValue + Environment.NewLine);
-        //                totalValue = 0;
-        //                countRecorded = 0;
-        //            }
-        //        }
-        //    }
-        //}
-
-        //public bool SaveRecordedValue(int data)
-        //{
-        //    if (countRecorded == 0)
-        //    {
-        //        timer.Restart();
-        //        countRecorded++;
-        //        totalValue += data;
-        //    }
-        //    else
-        //    {
-        //        countRecorded++;
-        //        totalValue += data;
-        //        if (timer.ElapsedMilliseconds > TimePeriod)
-        //        {
-        //            return true;
-        //        }
-        //    }
-
-        //    return false;
-        //}
-
         private void DataReceivedEventHandler(object sender, SerialDataReceivedEventArgs e)
         {
             try
@@ -178,35 +108,13 @@ namespace r3d
             }
         }
 
-        //private void Menu_PauseClick(object sender, RoutedEventArgs e)
-        //{
-        //    mySerialPort.Write("B");
-        //}
-
-        //private void Menu_CloseClick(object sender, RoutedEventArgs e)
-        //{
-        //    LogTextBlock.AppendText("Stop Recording\r\n");
-        //    mySerialPort.Close();
-        //}
-
         private void Menu_SettingsClick(object sender, RoutedEventArgs e)
         {
-            LoadJsonSettings();
-
-            WriteLine($"Settings:\r\tX-Axis:");
-            WriteLine($"\t\tMinimum: {printerSettings.XAxis.Minimum}");
-            WriteLine($"\t\tMaximum: {printerSettings.XAxis.Maximum}");
-            WriteLine($"\t\tPoints/Millimeter: {printerSettings.XAxis.PointsPerMillimeter}");
-
-            WriteLine($"\tY-Axis:");
-            WriteLine($"\t\tMinimum: {printerSettings.YAxis.Minimum}");
-            WriteLine($"\t\tMaximum: {printerSettings.YAxis.Maximum}");
-            WriteLine($"\t\tPoints/Millimeter: {printerSettings.YAxis.PointsPerMillimeter}");
-
-            WriteLine($"\tZ-Axis:");
-            WriteLine($"\t\tMinimum: {printerSettings.ZAxis.Minimum}");
-            WriteLine($"\t\tMaximum: {printerSettings.ZAxis.Maximum}");
-            WriteLine($"\t\tPoints/Millimeter: {printerSettings.ZAxis.PointsPerMillimeter}");
+            var settingsWindow = new MaintainSettings(printSettingsFolder, printSettingsFileName)
+            {
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            settingsWindow.ShowDialog();
         }
 
         private void WriteLine(string text)
@@ -216,7 +124,7 @@ namespace r3d
 
         public void LoadJsonSettings()
         {
-            using (var r = new StreamReader(Path.Combine(LabelSettingsFolder.Content.ToString(), TextSettingsFileName.Text)))
+            using (var r = new StreamReader(Path.Combine(printSettingsFolder, printSettingsFileName)))
             {
                 var json = r.ReadToEnd();
                 printerSettings = JsonConvert.DeserializeObject<Settings>(json);
@@ -243,11 +151,32 @@ namespace r3d
             // Get the selected file name and display in a TextBox 
             if (result == true)
             {
-                // Open document 
-                TextSettingsFileName.Text = dlg.SafeFileName;
+                // Open document
+                printSettingsFileName = dlg.SafeFileName;
+                TextSettingsFileName.Text = printSettingsFileName;
             }
 
-            Menu_SettingsClick(sender, e);
+            DisplaySettings();
+        }
+
+        private void DisplaySettings()
+        {
+            LoadJsonSettings();
+
+            WriteLine($"Settings:\r\tX-Axis:");
+            WriteLine($"\t\tMinimum: {printerSettings.XAxis.Minimum}");
+            WriteLine($"\t\tMaximum: {printerSettings.XAxis.Maximum}");
+            WriteLine($"\t\tPoints/Millimeter: {printerSettings.XAxis.PointsPerMillimeter}");
+
+            WriteLine($"\tY-Axis:");
+            WriteLine($"\t\tMinimum: {printerSettings.YAxis.Minimum}");
+            WriteLine($"\t\tMaximum: {printerSettings.YAxis.Maximum}");
+            WriteLine($"\t\tPoints/Millimeter: {printerSettings.YAxis.PointsPerMillimeter}");
+
+            WriteLine($"\tZ-Axis:");
+            WriteLine($"\t\tMinimum: {printerSettings.ZAxis.Minimum}");
+            WriteLine($"\t\tMaximum: {printerSettings.ZAxis.Maximum}");
+            WriteLine($"\t\tPoints/Millimeter: {printerSettings.ZAxis.PointsPerMillimeter}");
         }
 
         private void Button_PrintClick(object sender, RoutedEventArgs e)
