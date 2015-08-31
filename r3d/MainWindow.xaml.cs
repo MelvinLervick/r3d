@@ -3,11 +3,14 @@ using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Ports;
+using System.Web.UI.WebControls;
 using System.Windows;
+using System.Windows.Controls;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using r3d.PrinterSettings;
 using Path = System.IO.Path;
+using SVGLib;
 
 namespace r3d
 {
@@ -30,6 +33,8 @@ namespace r3d
         private Settings printerSettings;
         private string printFilesFolder;
         private string printFileName;
+
+        private SvgDoc svgDocument;
 
         public MainWindow()
         {
@@ -131,6 +136,10 @@ namespace r3d
 
         private void Menu_ReadLayerClick(object sender, RoutedEventArgs e)
         {
+            // Sample z-axis
+            // 1.75e-007 || .000000175 || .175 mm || this is a Slic3r issue, not sure why the divide by 1M
+            // 3.75e-007
+            // 4.25e-007
         }
 
         private void Menu_SendLayerClick(object sender, RoutedEventArgs e)
@@ -146,7 +155,9 @@ namespace r3d
             if (result == true)
             {
                 // Open document
+                printSettingsFolder = Path.GetDirectoryName(dlg.FileName);
                 printSettingsFileName = dlg.SafeFileName;
+                LabelSettingsFolder.Content = printSettingsFolder;
                 TextSettingsFileName.Text = printSettingsFileName;
             }
 
@@ -184,8 +195,186 @@ namespace r3d
             if (result == true)
             {
                 // Open document 
-                TextFileName.Text = dlg.SafeFileName;
+                printFilesFolder = Path.GetDirectoryName(dlg.FileName);
+                printFileName = dlg.SafeFileName;
+                LabelFilesFolder.Content = printFilesFolder;
+                TextFileName.Text = printFileName;
+
+                LoadTreeFromSvgFile();
             }
+        }
+
+        private void ResetTree()
+        {
+            //m_sFileName = "";
+
+            //m_lvstate = new Hashtable();
+
+            //txtXML.Text = "";
+            TreeViewPrintFile.Items.Clear();
+
+            svgDocument = new SvgDoc();
+        }
+
+        private void LoadTreeFromSvgFile()
+        {
+            //var openFile = new OpenFileDialog();
+            //if (openFile.ShowDialog(this) != DialogResult.OK)
+            //{
+            //    return;
+            //}
+
+            //if (!File.Exists(openFile.FileName))
+            //{
+            //    MessageBox.Show("The file does not exists!", "SVGPad", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    return;
+            //}
+
+            ResetTree();
+
+            //m_sFileName = openFile.FileName;
+
+            if (!svgDocument.LoadFromFile(Path.Combine(printFilesFolder, printFileName)) || svgDocument.GetSvgRoot() == null)
+            {
+                MessageBox.Show("The file is not a valid Svg!", "SVGLoad", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            //sb.Text = m_sFileName;
+
+            AddNodeToTree(null, svgDocument.GetSvgRoot(), null);
+        }
+
+        private SvgElement GetCurrentSvgElement()
+        {
+            TreeViewItem node = TreeViewPrintFile.SelectedItem as TreeViewItem;
+            if (node == null)
+            {
+                return null;
+            }
+
+            // the tree view node tag is the SvgElement getInternalId()
+            SvgElement ele = svgDocument.GetSvgElement((int)node.Tag);
+
+            return ele;
+        }
+
+        private TreeViewItem FindNodeByTag(TreeViewItem nodeParent, string sTag)
+        {
+            //if (nodeParent == null)
+            //{
+            //    // start from the root
+            //    nodeParent = TreeViewPrintFile.Items[0];
+            //}
+            //if (nodeParent == null)
+            //{
+            //    // the tree is empty
+            //    return null;
+            //}
+
+            //if (nodeParent.Tag.ToString() == sTag)
+            //{
+            //    return nodeParent;
+            //}
+
+            //foreach (TreeNode nod in nodeParent.Nodes)
+            //{
+            //    TreeNode nodToRet = FindNodeByTag(nod, sTag);
+            //    if (nodToRet != null)
+            //    {
+            //        return nodToRet;
+            //    }
+            //}
+
+            return null;
+        }
+
+        private void AddNodeToTree(SvgElement ele)
+        {
+            if (ele == null)
+            {
+                return;
+            }
+
+            SvgElement parent = GetCurrentSvgElement();
+            AddNodeToTree(parent, ele, null);
+        }
+
+        private void AddNodeToTree(SvgElement eleParent,
+                                   SvgElement eleToAdd,
+                                   SvgElement eleBefore)
+        {
+            if (eleToAdd == null)
+            {
+                return;
+            }
+
+            string sNodeName = eleToAdd.getElementName();
+            string sId;
+            sId = eleToAdd.Id;
+
+
+            if (sId != "")
+            {
+                sNodeName += "(";
+                sNodeName += sId;
+                sNodeName += ")";
+            }
+            TreeViewItem node = new TreeViewItem { Name = sNodeName };
+            node.Tag = eleToAdd.getInternalId();
+
+            TreeViewItem nodeParent = null;
+            TreeViewItem nodeBefore = null;
+
+            if (eleParent != null)
+            {
+                nodeParent = FindNodeByTag(null, eleParent.getInternalId().ToString());
+            }
+
+            if (eleBefore != null)
+            {
+                nodeBefore = FindNodeByTag(nodeParent, eleBefore.getInternalId().ToString());
+            }
+
+            if (nodeParent == null)
+            {
+                if (nodeBefore == null)
+                {
+                    TreeViewPrintFile.Items.Add(node);
+                }
+                else
+                {
+                    //TreeViewPrintFile.Items.Insert(nodeBefore.Index, node);
+                }
+            }
+            else
+            {
+                if (nodeBefore == null)
+                {
+                    nodeParent.Items.Add(node);
+                }
+                else
+                {
+                    //nodeParent.Items.Insert(nodeBefore.Index, node);
+                }
+            }
+
+            //node.ImageIndex = (int)eleToAdd.getElementType();
+            //node.SelectedImageIndex = nod.ImageIndex;
+            //node.Expand();
+
+            if (eleToAdd.getChild() != null)
+            {
+                AddNodeToTree(eleToAdd, eleToAdd.getChild(), null);
+
+                SvgElement nxt = eleToAdd.getChild().getNext();
+                while (nxt != null)
+                {
+                    AddNodeToTree(eleToAdd, nxt, null);
+                    nxt = nxt.getNext();
+                }
+            }
+            //TreeViewPrintFile.SelectedItem = node;
         }
 
         private static OpenFileDialog OpenFileDialog(out bool? result, string dir, string extDefault)

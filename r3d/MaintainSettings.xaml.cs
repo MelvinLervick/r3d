@@ -170,7 +170,7 @@ namespace r3d
             if (saveAsUsingFileDialog.FileName != "")
             {
                 SettingsFolder = Path.GetDirectoryName(saveAsUsingFileDialog.FileName);
-                SettingsFile = Path.GetFileName(saveAsUsingFileDialog.FileName);
+                SettingsFile = saveAsUsingFileDialog.SafeFileName;
                 LabelSettingsFolder.Content = SettingsFolder;
                 TextSettingsFileName.Text = SettingsFile;
                 File.WriteAllText(saveAsUsingFileDialog.FileName, json);
