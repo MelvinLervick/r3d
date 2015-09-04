@@ -1,17 +1,6 @@
-// --------------------------------------------------------------------------------
-// Name:     SvgEllipse
-//
-// Author:   Maurizio Bigoloni <big71@fastwebnet.it>
-//           See the ReleaseNote.txt file for copyright and license information.
-//
-// Remarks:
-//
-// --------------------------------------------------------------------------------
-
-using System;
 using System.ComponentModel;
 
-namespace SVGLib
+namespace SvgLibrary
 {
 	/// <summary>
 	/// It represents the ellipse SVG element.
@@ -27,12 +16,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_CX);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificCx);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_CX, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificCx, value);
 			}
 		}
 
@@ -45,12 +34,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_CY);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificCy);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_CY, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificCy, value);
 			}
 		}
 
@@ -63,12 +52,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_RX);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificRx);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_RX, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificRx, value);
 			}
 		}
 
@@ -81,12 +70,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_RY);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificRy);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_RY, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificRy, value);
 			}
 		}
 
@@ -94,7 +83,7 @@ namespace SVGLib
 		/// It constructs an ellipse element with no attribute.
 		/// </summary>
 		/// <param name="doc">SVG document.</param>
-		public SvgEllipse(SvgDoc doc):base(doc)
+		public SvgEllipse(SvgDocument doc):base(doc)
 		{
 			Init();
 		}
@@ -107,7 +96,7 @@ namespace SVGLib
 		/// <param name="sCY"></param>
 		/// <param name="sRX"></param>
 		/// <param name="sRY"></param>
-		public SvgEllipse(SvgDoc doc, string sCX, string sCY, string sRX, string sRY):base(doc)
+		public SvgEllipse(SvgDocument doc, string sCX, string sCY, string sRX, string sRY):base(doc)
 		{
 			Init();
 
@@ -119,13 +108,13 @@ namespace SVGLib
 
 		private void Init()
 		{
-			m_sElementName = "ellipse";
-			m_ElementType = _SvgElementType.typeEllipse;
+			ElementName = "ellipse";
+			ElementType = SvgElementType.TypeEllipse;
 
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_CX, "");
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_CY, "");
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_RX, "");
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_RY, "");
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificCx, "");
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificCy, "");
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificRx, "");
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificRy, "");
 		}
 	}
 }

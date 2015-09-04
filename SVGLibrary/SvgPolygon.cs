@@ -1,17 +1,6 @@
-// --------------------------------------------------------------------------------
-// Name:     SvgPolygon
-//
-// Author:   Maurizio Bigoloni <big71@fastwebnet.it>
-//           See the ReleaseNote.txt file for copyright and license information.
-//
-// Remarks:
-//
-// --------------------------------------------------------------------------------
-
-using System;
 using System.ComponentModel;
 
-namespace SVGLib
+namespace SvgLibrary
 {
 	/// <summary>
 	/// It represents the polygon SVG element.
@@ -28,12 +17,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_Points);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificPoints);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_Points, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificPoints, value);
 			}
 		}
 
@@ -41,7 +30,7 @@ namespace SVGLib
 		/// It constructs a polygon element with no attribute.
 		/// </summary>
 		/// <param name="doc">SVG document.</param>
-		public SvgPolygon(SvgDoc doc):base(doc)
+		public SvgPolygon(SvgDocument doc):base(doc)
 		{
 			Init();
 		}
@@ -51,7 +40,7 @@ namespace SVGLib
 		/// </summary>
 		/// <param name="doc">SVG document.</param>
 		/// <param name="sPoints"></param>
-		public SvgPolygon(SvgDoc doc, string sPoints):base(doc)
+		public SvgPolygon(SvgDocument doc, string sPoints):base(doc)
 		{
 			Init();
 
@@ -60,10 +49,10 @@ namespace SVGLib
 
 		private void Init()
 		{
-			m_sElementName = "polygon";
-			m_ElementType = _SvgElementType.typePolygon;
+			ElementName = "polygon";
+			ElementType = SvgElementType.TypePolygon;
 
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_Points, "");
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificPoints, "");
 		}
 	}
 }

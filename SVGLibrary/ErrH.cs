@@ -1,22 +1,12 @@
-// --------------------------------------------------------------------------------
-// Name:     ErrH
-//
-// Author:   Maurizio Bigoloni <big71@fastwebnet.it>
-//           See the ReleaseNote.txt file for copyright and license information.
-//
-// Remarks:
-//
-// --------------------------------------------------------------------------------
-
 using System;
 using System.Diagnostics;
 
-namespace SVGLib
+namespace SvgLibrary
 {
 	/// <summary>
 	/// Summary description for ErrH.
 	/// </summary>
-	internal class ErrH
+	internal class ErrHandler
 	{
 		public enum _LogMode
 		{
@@ -40,7 +30,7 @@ namespace SVGLib
 		private string m_sClass;
 		private string m_sMethod;
 
-		public ErrH(string sClass, string sMethod)
+		public ErrHandler(string sClass, string sMethod)
 		{
 			m_sClass = sClass;
 			m_sMethod = sMethod;
@@ -48,7 +38,7 @@ namespace SVGLib
 			Log("Enter Method", _LogPriority.Info);
 		}
 
-		~ErrH()
+		~ErrHandler()
 		{
 			
 		}

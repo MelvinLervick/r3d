@@ -1,7 +1,6 @@
-using System;
 using System.ComponentModel;
 
-namespace SVGLib
+namespace SvgLibrary
 {
 	/// <summary>
 	/// It represents the image SVG element.
@@ -17,12 +16,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_X);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificX);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_X, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificX, value);
 			}
 		}
 
@@ -35,12 +34,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_Y);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificY);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_Y, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificY, value);
 			}
 		}
 
@@ -53,12 +52,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_Width);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificWidth);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_Width, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificWidth, value);
 			}
 		}
 
@@ -71,12 +70,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_Height);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificHeight);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_Height, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificHeight, value);
 			}
 		}
 
@@ -89,12 +88,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrStyle_Class);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrStyleClass);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrStyle_Class, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrStyleClass, value);
 			}
 		}
 
@@ -107,12 +106,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrStyle_Style);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrStyleStyle);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrStyle_Style, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrStyleStyle, value);
 			}
 		}
 
@@ -125,12 +124,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrXLink_HRef);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrXLinkHRef);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrXLink_HRef, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrXLinkHRef, value);
 			}
 		}
 
@@ -138,7 +137,7 @@ namespace SVGLib
 		/// It constructs an image element with no attribute.
 		/// </summary>
 		/// <param name="doc">SVG document.</param>
-		public SvgImage(SvgDoc doc):base(doc)
+		public SvgImage(SvgDocument doc):base(doc)
 		{
 			Init();
 		}
@@ -153,7 +152,7 @@ namespace SVGLib
 		/// <param name="sHeight"></param>
 		/// <param name="sHRef"></param>
 		/// <param name="doc"></param>
-		public SvgImage(SvgDoc doc, 
+		public SvgImage(SvgDocument doc, 
 						string sX, 
 						string sY, 
 						string sWidth, 
@@ -171,18 +170,18 @@ namespace SVGLib
 
 		private void Init()
 		{
-			m_sElementName = "image";
-			m_ElementType = _SvgElementType.typeImage;
+			ElementName = "image";
+			ElementType = SvgElementType.TypeImage;
 
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_X, "");
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_Y, "");
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_Width, "");
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_Height, "");
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificX, "");
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificY, "");
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificWidth, "");
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificHeight, "");
 			
-			AddAttr(SvgAttribute._SvgAttribute.attrXLink_HRef, "");
+			AddAttribute(SvgAttribute.SvgAttributes.AttrXLinkHRef, "");
 
-			AddAttr(SvgAttribute._SvgAttribute.attrStyle_Class, "");
-			AddAttr(SvgAttribute._SvgAttribute.attrStyle_Style, "");
+			AddAttribute(SvgAttribute.SvgAttributes.AttrStyleClass, "");
+			AddAttribute(SvgAttribute.SvgAttributes.AttrStyleStyle, "");
 		}
 	}
 }

@@ -10,7 +10,7 @@ using Microsoft.Win32;
 using Newtonsoft.Json;
 using r3d.PrinterSettings;
 using Path = System.IO.Path;
-using SVGLib;
+using SvgLibrary;
 
 namespace r3d
 {
@@ -34,7 +34,7 @@ namespace r3d
         private string printFilesFolder;
         private string printFileName;
 
-        private SvgDoc svgDocument;
+        private SvgDocument svgDocument;
 
         public MainWindow()
         {
@@ -213,7 +213,7 @@ namespace r3d
             //txtXML.Text = "";
             TreeViewPrintFile.Items.Clear();
 
-            svgDocument = new SvgDoc();
+            svgDocument = new SvgDocument();
         }
 
         private void LoadTreeFromSvgFile()
@@ -309,31 +309,31 @@ namespace r3d
                 return;
             }
 
-            string sNodeName = eleToAdd.getElementName();
+            string sNodeName = eleToAdd.GetElementName();
             string sId;
             sId = eleToAdd.Id;
 
 
             if (sId != "")
             {
-                sNodeName += "(";
+                sNodeName += "_";
                 sNodeName += sId;
-                sNodeName += ")";
+                //sNodeName += ")";
             }
             TreeViewItem node = new TreeViewItem { Name = sNodeName };
-            node.Tag = eleToAdd.getInternalId();
+            node.Tag = eleToAdd.GetInternalId();
 
             TreeViewItem nodeParent = null;
             TreeViewItem nodeBefore = null;
 
             if (eleParent != null)
             {
-                nodeParent = FindNodeByTag(null, eleParent.getInternalId().ToString());
+                nodeParent = FindNodeByTag(null, eleParent.GetInternalId().ToString());
             }
 
             if (eleBefore != null)
             {
-                nodeBefore = FindNodeByTag(nodeParent, eleBefore.getInternalId().ToString());
+                nodeBefore = FindNodeByTag(nodeParent, eleBefore.GetInternalId().ToString());
             }
 
             if (nodeParent == null)
@@ -363,18 +363,18 @@ namespace r3d
             //node.SelectedImageIndex = nod.ImageIndex;
             //node.Expand();
 
-            if (eleToAdd.getChild() != null)
+            if (eleToAdd.GetChild() != null)
             {
-                AddNodeToTree(eleToAdd, eleToAdd.getChild(), null);
+                AddNodeToTree(eleToAdd, eleToAdd.GetChild(), null);
 
-                SvgElement nxt = eleToAdd.getChild().getNext();
+                SvgElement nxt = eleToAdd.GetChild().GetNext();
                 while (nxt != null)
                 {
                     AddNodeToTree(eleToAdd, nxt, null);
-                    nxt = nxt.getNext();
+                    nxt = nxt.GetNext();
                 }
             }
-            //TreeViewPrintFile.SelectedItem = node;
+            TreeViewPrintFile.Items.MoveCurrentTo(node);
         }
 
         private static OpenFileDialog OpenFileDialog(out bool? result, string dir, string extDefault)

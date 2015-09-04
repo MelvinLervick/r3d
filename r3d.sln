@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "r3d", "r3d\r3d.csproj", "{02207541-C25A-447D-A59A-9EBF2628A496}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SVGLib", "SVGLib\SVGLib.csproj", "{43B7A044-2909-48C9-AD09-707709CDFE46}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SvgLibrary", "SVGLibrary\SvgLibrary.csproj", "{43B7A044-2909-48C9-AD09-707709CDFE46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

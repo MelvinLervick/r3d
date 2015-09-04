@@ -1,8 +1,7 @@
-using System;
 using System.ComponentModel;
 using System.Drawing;
 
-namespace SVGLib
+namespace SvgLibrary
 {
 	/// <summary>
 	/// It represents the line SVG element.
@@ -18,12 +17,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_X1);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificX1);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_X1, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificX1, value);
 			}
 		}
 
@@ -36,12 +35,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_Y1);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificY1);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_Y1, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificY1, value);
 			}
 		}
 
@@ -54,12 +53,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_X2);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificX2);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_X2, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificX2, value);
 			}
 		}
 
@@ -72,12 +71,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_Y2);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificY2);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_Y2, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificY2, value);
 			}
 		}
 
@@ -85,7 +84,7 @@ namespace SVGLib
 		/// It constructs an line element with no attribute.
 		/// </summary>
 		/// <param name="doc">SVG document.</param>
-		public SvgLine(SvgDoc doc):base(doc)
+		public SvgLine(SvgDocument doc):base(doc)
 		{
 			Init();
 		}
@@ -99,7 +98,7 @@ namespace SVGLib
 		/// <param name="sX2"></param>
 		/// <param name="sY2"></param>
 		/// <param name="col"></param>
-		public SvgLine(SvgDoc doc, string sX1, string sY1, string sX2, string sY2, Color col):base(doc)
+		public SvgLine(SvgDocument doc, string sX1, string sY1, string sX2, string sY2, Color col):base(doc)
 		{
 			Init();
 
@@ -112,13 +111,13 @@ namespace SVGLib
 
 		private void Init()
 		{
-			m_sElementName = "line";
-			m_ElementType = _SvgElementType.typeLine;
+			ElementName = "line";
+			ElementType = SvgElementType.TypeLine;
 
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_X1, "");
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_Y1, "");
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_X2, "");
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_Y2, "");
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificX1, "");
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificY1, "");
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificX2, "");
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificY2, "");
 		}
 	}
 }

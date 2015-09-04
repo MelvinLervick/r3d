@@ -1,18 +1,7 @@
-// --------------------------------------------------------------------------------
-// Name:     SvgRect
-//
-// Author:   Maurizio Bigoloni <big71@fastwebnet.it>
-//           See the ReleaseNote.txt file for copyright and license information.
-//
-// Remarks:
-//
-// --------------------------------------------------------------------------------
-
-using System;
 using System.ComponentModel;
 using System.Drawing;
 
-namespace SVGLib
+namespace SvgLibrary
 {
 	/// <summary>
 	/// It represents the rect SVG element.
@@ -28,12 +17,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_X);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificX);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_X, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificX, value);
 			}
 		}
 
@@ -46,12 +35,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_Y);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificY);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_Y, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificY, value);
 			}
 		}
 
@@ -64,12 +53,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_Width);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificWidth);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_Width, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificWidth, value);
 			}
 		}
 
@@ -82,12 +71,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_Height);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificHeight);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_Height, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificHeight, value);
 			}
 		}
 
@@ -100,12 +89,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_RX);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificRx);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_RX, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificRx, value);
 			}
 		}
 
@@ -118,12 +107,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_RY);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificRy);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_RY, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificRy, value);
 			}
 		}
 
@@ -131,7 +120,7 @@ namespace SVGLib
 		/// It constructs a rect element with no attribute.
 		/// </summary>
 		/// <param name="doc">SVG document.</param>
-		public SvgRect(SvgDoc doc):base(doc)
+		public SvgRect(SvgDocument doc):base(doc)
 		{
 			Init();
 		}
@@ -147,7 +136,7 @@ namespace SVGLib
 		/// <param name="sStrokeWidth"></param>
 		/// <param name="colFill"></param>
 		/// <param name="colStroke"></param>
-		public SvgRect(SvgDoc doc, 
+		public SvgRect(SvgDocument doc, 
 			           string sX, 
 			           string sY, 
 			           string sWidth, 
@@ -169,15 +158,15 @@ namespace SVGLib
 
 		private void Init()
 		{
-			m_sElementName = "rect";
-			m_ElementType = _SvgElementType.typeRect;
+			ElementName = "rect";
+			ElementType = SvgElementType.TypeRect;
 
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_X, null);
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_Y, null);
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_Width, null);
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_Height, null);
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_RX, null);
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_RY, null);
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificX, null);
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificY, null);
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificWidth, null);
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificHeight, null);
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificRx, null);
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificRy, null);
 		}
 	}
 }

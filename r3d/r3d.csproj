@@ -116,9 +116,9 @@
     <Folder Include="PrintFiles\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SVGLib\SVGLib.csproj">
+    <ProjectReference Include="..\SVGLibrary\SvgLibrary.csproj">
       <Project>{43b7a044-2909-48c9-ad09-707709cdfe46}</Project>
-      <Name>SVGLib</Name>
+      <Name>SvgLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

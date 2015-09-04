@@ -1,17 +1,6 @@
-// --------------------------------------------------------------------------------
-// Name:     SvgDesc
-//
-// Author:   Maurizio Bigoloni <big71@fastwebnet.it>
-//           See the ReleaseNote.txt file for copyright and license information.
-//
-// Remarks:
-//
-// --------------------------------------------------------------------------------
-
-using System;
 using System.ComponentModel;
 
-namespace SVGLib
+namespace SvgLibrary
 {
 	/// <summary>
 	/// It represents the desc SVG element.
@@ -29,12 +18,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return m_sElementValue;	
+				return ElementValue;	
 			}
 
 			set	
 			{
-				m_sElementValue =  value;
+				ElementValue =  value;
 			}
 		}
 
@@ -42,7 +31,7 @@ namespace SVGLib
 		/// It constructs a desc element with no attribute.
 		/// </summary>
 		/// <param name="doc">SVG document.</param>
-		public SvgDesc(SvgDoc doc):base(doc)
+		public SvgDesc(SvgDocument doc):base(doc)
 		{
 			Init();
 		}
@@ -52,7 +41,7 @@ namespace SVGLib
 		/// </summary>
 		/// <param name="doc">SVG document.</param>
 		/// <param name="sValue"></param>
-		public SvgDesc(SvgDoc doc, string sValue):base(doc)
+		public SvgDesc(SvgDocument doc, string sValue):base(doc)
 		{
 			Init();
 
@@ -61,9 +50,9 @@ namespace SVGLib
 
 		private void Init()
 		{
-			m_sElementName = "desc";
-			m_bHasValue = true;
-			m_ElementType = _SvgElementType.typeDesc;
+			ElementName = "desc";
+			HasValue = true;
+			ElementType = SvgElementType.TypeDesc;
 		}
 	}
 }

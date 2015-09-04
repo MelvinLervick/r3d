@@ -1,17 +1,6 @@
-// --------------------------------------------------------------------------------
-// Name:     SvgPath
-//
-// Author:   Maurizio Bigoloni <big71@fastwebnet.it>
-//           See the ReleaseNote.txt file for copyright and license information.
-//
-// Remarks:
-//
-// --------------------------------------------------------------------------------
-
-using System;
 using System.ComponentModel;
 
-namespace SVGLib
+namespace SvgLibrary
 {
 	/// <summary>
 	/// It represents the path SVG element.
@@ -28,12 +17,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_PathData);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificPathData);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_PathData, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificPathData, value);
 			}
 		}
 
@@ -46,12 +35,12 @@ namespace SVGLib
 		{
 			get	
 			{
-				return GetAttributeStringValue(SvgAttribute._SvgAttribute.attrSpecific_PathLength);	
+				return GetAttributeStringValue(SvgAttribute.SvgAttributes.AttrSpecificPathLength);	
 			}
 
 			set	
 			{
-				SetAttributeValue(SvgAttribute._SvgAttribute.attrSpecific_PathLength, value);
+				SetAttributeValue(SvgAttribute.SvgAttributes.AttrSpecificPathLength, value);
 			}
 		}
 
@@ -59,7 +48,7 @@ namespace SVGLib
 		/// It constructs a path element with no attribute.
 		/// </summary>
 		/// <param name="doc">SVG document.</param>
-		public SvgPath(SvgDoc doc):base(doc)
+		public SvgPath(SvgDocument doc):base(doc)
 		{
 			Init();
 		}
@@ -69,7 +58,7 @@ namespace SVGLib
 		/// </summary>
 		/// <param name="doc"></param>
 		/// <param name="sPathData">SVG document.</param>
-		public SvgPath(SvgDoc doc, string sPathData):base(doc)
+		public SvgPath(SvgDocument doc, string sPathData):base(doc)
 		{
 			Init();
 
@@ -78,11 +67,11 @@ namespace SVGLib
 
 		private void Init()
 		{
-			m_sElementName = "path";
-			m_ElementType = _SvgElementType.typePath;
+			ElementName = "path";
+			ElementType = SvgElementType.TypePath;
 
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_PathData, "");
-			AddAttr(SvgAttribute._SvgAttribute.attrSpecific_PathLength, "");
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificPathData, "");
+			AddAttribute(SvgAttribute.SvgAttributes.AttrSpecificPathLength, "");
 		}
 	}
 }

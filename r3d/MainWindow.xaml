@@ -73,7 +73,7 @@
                 </Grid.ColumnDefinitions>
                 <Border Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="Blue" BorderThickness="0 0 0 2" >
                 </Border>
-                <TreeView Name="TreeViewPrintFile" Grid.Row="0" Grid.Column="0" Background="#FFDCF5EC" />
+                <TreeView Name="TreeViewPrintFile" Grid.Row="0" Grid.Column="1" Background="#FFDCF5EC" Margin="2" />
                 <RichTextBox Name="SettingsTextBlock" Grid.Row="0" Grid.Column="0"
                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
